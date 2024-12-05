@@ -1,0 +1,88 @@
+@prefix mdlc: <http://the-qa-company.com/modelcompiler/> .
+@prefix lod: <https://linkedopendata.eu/entity/> .
+@prefix mdcs: <http://the-qa-company.com/modelcustom/> .
+@prefix search: <http://www.openrdf.org/contrib/lucenesail#> .
+
+# Describe the endpoint server port
+mdlc:main mdlc:serverPort 3030 .
+
+# Describe the maximum time for a non-update query (in seconds), 0 = infinity
+# mdlc:main mdlc:timeoutQuery 300 .
+
+# Describe the maximum time for an update query (in seconds), 0 = infinity
+# mdlc:main mdlc:timeoutUpdate 300 .
+
+# Describe the storage mode of the endpoint
+# mdlc:main mdlc:storageMode mdlc:endpointStoreStorage .
+
+# Describe the loading method of the HDT, using LOAD or MAP
+# mdlc:main mdlc:hdtReadMode mdlc:hdtLoadReadMode .
+
+# Describe the loading specs of the HDT
+#mdlc:main mdlc:hdtSpec "bitmaptriples.index.others=spo,sop,pso,pos,ops,osp;bitmaptriples.index.noFoQ=true;bitmaptriples.sequence.disk.location=qendpoint/bitmaptriples;qendpoint.mergejoin=true;bitmaptriples.index.allowOldOthers=true" .
+mdlc:main mdlc:hdtSpec "bitmaptriples.sequence.disk.location=qendpoint/bitmaptriples;qendpoint.mergejoin=true;bitmaptriples.index.others=spo,sop,pso,pos,ops,osp;bitmaptriples.index.noFoQ=true;bitmaptriples.index.allowOldOthers=true" .
+
+# Describe the default split for native store storages
+# mdlc:main mdlc:rdfStoreSplit 1000 .
+
+# Enable to show the time of the executed queries
+# mdlc:main mdlc:option mdlc:debugShowTime .
+
+# Enable to show the plan of the executed queries
+# mdlc:main mdlc:option mdlc:debugShowPlan .
+
+# Set the dump location for the askDump functions, by default "dump" inside the root directory is used
+mdlc:main mdlc:dumpLocation "${locationHDT}dump"^^mdlc:parsedString .
+
+# Describe custom strings for the mdlc:parsedString format, will be available with ${key}
+mdlc:main mdlc:parsedStringParam [ mdlc:paramKey "luceneEvalMode" ; mdlc:paramValue "NATIVE" ] .
+mdlc:main mdlc:parsedStringParam [ mdlc:paramKey "luceneWktFields" ; mdlc:paramValue "http://nuts.de/geometry https://linkedopendata.eu/prop/direct/P127" ] .
+
+mdlc:main mdlc:node _:multiTypeFilter .
+
+# Filter between types
+_:multiTypeFilter mdlc:type mdlc:multiFilterNode;
+                  mdlc:node [
+                    mdlc:node _:benLucene;
+                    mdlc:typeFilterObject lod:Q196899
+                  ], [
+                    mdlc:node _:projLucene;
+                    mdlc:typeFilterObject lod:Q9934
+                  ];
+                  mdlc:typeFilterPredicate <https://linkedopendata.eu/prop/direct/P35> .
+
+_:benLucene mdlc:dirLocation "${locationNative}lucene_mt/ben"^^mdlc:parsedString;
+  mdlc:luceneEvalMode "NATIVE";
+  mdlc:luceneReindexQuery "SELECT ?s ?p ?o WHERE { ?s <https://linkedopendata.eu/prop/direct/P35> <https://linkedopendata.eu/entity/Q196899> ; ?p ?o . }  ";
+  mdlc:type mdlc:luceneNode;
+  mdlc:luceneParam [
+    mdlc:paramKey "maxDocuments" ;
+    mdlc:paramValue "5000" ;
+  ] ;
+  search:indexid mdcs:Ben .
+
+
+_:projLucene mdlc:type mdlc:linkedSailNode ;
+           mdlc:node _:projLucene_en, _:projLucene_all .
+
+_:projLucene_en mdlc:dirLocation "${locationNative}lucene_mt/proj_en"^^mdlc:parsedString;
+  mdlc:luceneEvalMode "NATIVE";
+  mdlc:luceneReindexQuery "SELECT ?s ?p ?o WHERE { ?s <https://linkedopendata.eu/prop/direct/P35> <https://linkedopendata.eu/entity/Q9934> ; ?p ?o . FILTER(LANG(?o) = 'en')}  ";
+  mdlc:type mdlc:luceneNode;
+  mdlc:luceneParam [
+    mdlc:paramKey "maxDocuments" ;
+    mdlc:paramValue "5000" ;
+  ] ;
+  mdlc:luceneLang "en" ;
+  search:indexid mdcs:Proj_en .
+
+_:projLucene_all mdlc:dirLocation "${locationNative}lucene_mt/proj"^^mdlc:parsedString;
+  mdlc:luceneEvalMode "NATIVE";
+  mdlc:luceneReindexQuery "SELECT ?s ?p ?o WHERE { ?s <https://linkedopendata.eu/prop/direct/P35> <https://linkedopendata.eu/entity/Q9934> ; ?p ?o .}  ";
+  mdlc:type mdlc:luceneNode;
+  mdlc:luceneParam [
+    mdlc:paramKey "maxDocuments" ;
+    mdlc:paramValue "5000" ;
+  ] ;
+  search:indexid mdcs:Proj_all .
+

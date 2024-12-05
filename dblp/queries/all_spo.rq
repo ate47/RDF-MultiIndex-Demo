@@ -1,0 +1,4 @@
+SELECT * {
+  ?subj ?pred ?obj
+} LIMIT 100
+

@@ -1,0 +1,13 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX search: <http://www.openrdf.org/contrib/lucenesail#>
+PREFIX dblp: <https://dblp.org/rdf/schema#>
+PREFIX my: <http://example.org/#>
+
+SELECT (count(*) as ?c) {
+  ?subj a dblp:Creator ;
+        rdfs:label ?label .
+  ?subj2 a dblp:Publication ;
+        rdfs:label ?label .
+    
+}
+

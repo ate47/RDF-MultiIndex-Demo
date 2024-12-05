@@ -1,0 +1,11 @@
+PREFIX search: <http://www.openrdf.org/contrib/lucenesail#>
+PREFIX dblp: <https://dblp.org/rdf/schema#>
+PREFIX my: <http://example.org/#>
+
+SELECT (count(*) as ?c) {
+?subj search:matches [
+	      search:query "Michel";
+        search:indexid my:nodeLucenePublication
+  ] .
+    
+}
