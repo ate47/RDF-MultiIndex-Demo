@@ -1,6 +1,6 @@
 # RDF-MultiIndex-LuceneExperiments
 
-Experiments done on [qEndpoint](https://github.com/the-qa-company/qEndpoint/).
+Experiments done on [qEndpoint](https://github.com/the-qa-company/qEndpoint/) 2.3.0.
 
 - [dplp](dblp/index.md)
 - [Kohesio](kohesio/index.md)
