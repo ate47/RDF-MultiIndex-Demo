@@ -4,6 +4,6 @@ PREFIX my: <http://example.org/#>
 
 SELECT (count(*) as ?c) {
 	?subj search:matches [
-	      search:query "Michel" ] .
+	      search:query "John" ] .
 	?subj a dblp:Creator
 }

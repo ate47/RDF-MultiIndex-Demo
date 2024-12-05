@@ -3,7 +3,9 @@ PREFIX dblp: <https://dblp.org/rdf/schema#>
 PREFIX my: <http://example.org/#>
 
 SELECT (count(*) as ?c) {
-	?subj search:matches [
-	      search:query "Michel" ] .
-	?subj a dblp:Creator
+?subj search:matches [
+	      search:query "Hans";
+        search:indexid my:nodeLucenePublication
+  ] .
+    
 }
