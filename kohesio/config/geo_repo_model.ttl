@@ -1,0 +1,31 @@
+@prefix mdlc: <http://the-qa-company.com/modelcompiler/> .
+@prefix lod: <https://linkedopendata.eu/entity/> .
+@prefix mdcs: <http://the-qa-company.com/modelcustom/> .
+@prefix search: <http://www.openrdf.org/contrib/lucenesail#> .
+
+mdlc:main mdlc:node _:geoFilter .
+
+_:geoFilter mdlc:type mdlc:filterNode ;
+            mdlc:paramFilter [
+                mdlc:type mdlc:predicateFilter ;
+                mdlc:typeFilterPredicate <http://nuts.de/geometry>, <http://laus.de/geometry>, <https://linkedopendata.eu/prop/direct/P127> ;
+            ];
+            mdlc:paramLink _:geo .
+
+_:geo mdlc:type mdlc:luceneNode ;
+            # Describe the location of the lucene directory, you can use mdlc:parsedString for template strings
+            mdlc:dirLocation "${locationNative}lucene/default"^^mdlc:parsedString;
+            # Define custom parameters, here the wkt fields for Geo-SPARQL
+            mdlc:luceneParam [
+                mdlc:paramKey "wktFields" ;
+                mdlc:paramValue "http://nuts.de/geometry http://laus.de/geometry https://linkedopendata.eu/prop/direct/P127"^^mdlc:parsedString ;
+            ] ;
+            mdlc:luceneParam [
+                                mdlc:paramKey "maxDocuments" ;
+                                mdlc:paramValue "50000"^^mdlc:parsedString ;
+                            ] ;
+            # Define the reindex query for the lucene sail, the query should be ordered by ?s
+            mdlc:luceneReindexQuery "SELECT ?s ?p ?o WHERE{ {SELECT ?s ?p ?o WHERE {?s ?p ?o . FILTER (?p = <https://linkedopendata.eu/prop/direct/P127>) } } UNION {SELECT ?s ?p ?o WHERE {?s ?p ?o . FILTER (?p = <http://nuts.de/geometry>) }} UNION {SELECT ?s ?p ?o WHERE {?s ?p ?o . FILTER (?p = <http://laus.de/geometry>) }}}"^^mdlc:parsedString ;
+            # Describe the evaluation mode of the queries, for native or endpointStore storage, use NATIVE
+            mdlc:luceneEvalMode "NATIVE" ;
+            search:indexid mdcs:Geo .
