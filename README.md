@@ -4,6 +4,7 @@ Experiments done on [qEndpoint](https://github.com/the-qa-company/qEndpoint/) 2.
 
 - [dplp](dblp/index.md)
 - [Kohesio](kohesio/index.md)
+- [Demo cocktails](demo/index.md)
 
 Prefixes:
 

@@ -1,0 +1,5 @@
+PREFIX cock: <http://vocabulary.semantic-web.at/cocktail-ontology/>
+
+SELECT DISTINCT ?obj WHERE {
+  ?subj a ?obj
+}

@@ -1,0 +1,12 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX search: <http://www.openrdf.org/contrib/lucenesail#>
+PREFIX cock: <http://vocabulary.semantic-web.at/cocktail-ontology/>
+PREFIX cocktails: <http://vocabulary.semantic-web.at/cocktails/>
+
+SELECT * {
+	?subj search:matches [
+	      search:query "Water";
+          search:indexid cock:Ingredients
+       ] ;
+          rdfs:label ?name;
+} LIMIT 100
