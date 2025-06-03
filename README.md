@@ -15,3 +15,8 @@ Prefixes:
 
 
 Each directory contains the repo_model.ttl config to put in the qendpoint directory and the queries to run.
+
+
+Poster:
+
+![poster](qr.png)
