@@ -5,9 +5,9 @@ PREFIX cocktails: <http://vocabulary.semantic-web.at/cocktails/>
 
 SELECT * {
 	?subj search:matches [
-	      search:query "Gin";
-          search:indexid cock:All
+	      search:query "Gin"
        ] ;
-          rdfs:label ?name;
-          a cock:Cocktail
+          a cock:Cocktail.
+  
+	?subj rdfs:label ?name
 } LIMIT 100

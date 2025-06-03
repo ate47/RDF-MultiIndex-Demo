@@ -7,6 +7,7 @@ SELECT * {
 	?subj search:matches [
 	      search:query "Water";
           search:indexid cock:Ingredients
-       ] ;
-          rdfs:label ?name;
+       ] .
+       
+	?subj rdfs:label ?name;
 } LIMIT 100
